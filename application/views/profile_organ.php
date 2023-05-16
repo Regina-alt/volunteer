@@ -110,14 +110,14 @@ $myrow = mysqli_fetch_array($r);
 
 
             <h3>Активные заявки</h3>
-            <div class="tbl-header">
+            <div class="tbl4-header">
                 <table cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
                             <th scope='col'>№</th>
                             <th scope='col'>Волонтер</th>
                             <th scope='col'>Мероприятие</th>
-                            <th scope='col'>Место проведения</th>
+                            <th scope='col'>Место</th>
                             <th scope='col'>Дата</th>
                             <th scope='col'>Часы</th>
                             <th scope='col'>Ответ на заявку</th>
@@ -125,7 +125,7 @@ $myrow = mysqli_fetch_array($r);
                     </thead>
                 </table>
             </div>
-            <div class="tbl-content">
+            <div class="tbl4-content">
                 <table cellpadding="0" cellspacing="0">
                     <tbody>
                         <?php
@@ -141,6 +141,7 @@ $myrow = mysqli_fetch_array($r);
                     <td>$myrow[data_start] - $myrow[data_finish]</td>
                     <td>$myrow[chas]</td>
                     <td><a href='../core/accept_z.php?id=$myrow[id_zayavka]' class='btn_zayavka'>Принять</a></td>
+                    <td><a href='../core/declined_z.php?id=$myrow[id_zayavka]' class='btn_zayavka'>Отклонить</a></td>
 				</tr>";
 
                         }

@@ -113,6 +113,14 @@ $profile = mysqli_fetch_assoc($select);
                 <i class="bi bi-circle"></i>Книжка волонтера
               </a>
             </li>
+            <li> <a href="otchet2.php">
+                <i class="bi bi-circle"></i>Отработанное время волонтёров за период в одном городе
+              </a>
+            </li>
+            <li> <a href="otchet3.php">
+                <i class="bi bi-circle"></i>Карточка организации
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -170,6 +178,71 @@ $profile = mysqli_fetch_assoc($select);
     <!--end top header-->
 
     <div class="table-container">
+    <h3>Таблица "Волонтеры"</h3>
+      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Добавить запись
+      </button>
+
+      <!-- Модальное окно -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Добавление волонтера</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+              <form action='inc/insertV.php' method='POST'>
+                <label for="fio">ФИО волонтера</label>
+                <br />
+                <input size='35' class='form-control1' , name='fio' type='text'>
+                <br />
+                <label for="adres_zitel">Адрес жительства</label>
+                <br />
+                <input size='35' class='form-control1' , name='adres_zitel' type='text'>
+                <br />
+                <label for="date_birthday">Дата рождения</label>
+                <br />
+                <input size='35' class='form-control1' , name='date_birthday' type='date' style='width: 350px;'>
+                <br />
+                <label for="otrabot_chas">Отработанные часы</label>
+                <br />
+                <input size='35' class='form-control1' , name='otrabot_chas' type='text'>
+                <br />
+                <label for="kol_meropr">Количество мероприятий</label>
+                <br />
+                <input size='35' class='form-control1' , name='kol_meropr' type='text'>
+                <br />
+                <label for="fk_user">Пользователь</label>
+                <br />
+                <select name='fk_user' style='width: 350px; padding: 10px; border-radius: 10px'>
+                  <?php 
+                  $sqlcombo = "SELECT * FROM `user`";
+                  $rescombo = mysqli_query($connect, $sqlcombo);
+                  while ($ri = mysqli_fetch_array($rescombo)) {
+                  echo "
+                  <option value='$ri[id_user]'>$ri[login]</option>";
+                  }
+                  ?>
+                </select>
+                <br />
+                <label for="img">Изображение</label>
+                <br />
+                <input size='35' class='form-control1' , name='img' type='text'>
+                <br />
+                <label for="tel">Номер телефона</label>
+                <br />
+                <input size='35' class='form-control1' , name='tel' type='text'>
+                <br />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              <input type='submit' class='btn btn-warning' value='Добавить'>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <?php
 
       if (isset($_GET['pageno'])) {
@@ -177,14 +250,14 @@ $profile = mysqli_fetch_assoc($select);
       } else {
         $pageno = 1;
       }
-      $size_page = 5;
+      $size_page = 6;
       $offset = ($pageno - 1) * $size_page;
 
       $count_sql = "SELECT COUNT(*) FROM `volonter`";
       $result = mysqli_query($connect, $count_sql);
       $total_rows = mysqli_fetch_array($result)[0];
       $total_pages = ceil($total_rows / $size_page);
-      $sql = "SELECT `id_volonter`, `fio`, `adres_zitel`, `date_birthday`, `otrabot_chas`, `kol_meropr`, `fk_user`, `img`, `tel` FROM `volonter` LIMIT $offset, $size_page";
+      $sql = "SELECT `id_volonter`, `fio`, `adres_zitel`, `date_birthday`, `otrabot_chas`, `kol_meropr`, `fk_user`, `img`, `tel`, `login` FROM `volonter`,`user` WHERE `volonter`.`fk_user`=`user`.`id_user` LIMIT $offset, $size_page";
       $res_data = mysqli_query($connect, $sql);
       echo "<table class='table'>";
       echo "<tr>";
@@ -197,56 +270,44 @@ $profile = mysqli_fetch_assoc($select);
       echo "<th scope='col'>Пользователь</th>";
       echo "<th scope='col'>Изображение</th>";
       echo "<th scope='col'>Телефон</th>";
-      echo "<th scope='col'></th>";
       echo "<th scope='col'>Модификация</th>";
       echo "<th scope='col'>Удаление</th>";
       echo "</tr>";
       while ($row = mysqli_fetch_array($res_data)) {
         echo "<tr>
-				<form action = 'inc/updateV.php' method = 'POST'>
-					<td>$row[id_volonter]</td>
+				<form action = 'inc/updateV.php' method = 'GET'>
+					<td><input size='3' class='form-control1', name = 'id_volonter' type='text' value='$row[id_volonter]' readonly></td>
 					<td><input size='32' class='form-control1', name = 'fio' type='text' value='$row[fio]' ></td>
-					<td><input size='34' class='form-control1', name = 'adres_zitel' type='text' value='$row[adres_zitel]'></td>
-                    <td><input class='form-control1', name = 'date_birthday' type='date' value='$row[date_birthday]'></td>
-                    <td><input size='5' class='form-control1', name = 'otrabot_chas' type='text' value='$row[otrabot_chas]'></td>
-                    <td><input size='5' class='form-control1', name = 'kol_meropr' type='text' value='$row[kol_meropr]'></td>
-                    <td><input size='5' class='form-control1', name = 'fk_user' type='text' value='$row[fk_user]'></td>
-                    <td><input size='10' class='form-control1', name = 'img' type='text' value='$row[img]'></td>
-                    <td><input size='15' class='form-control1', name = 'tel' type='text' value='$row[tel]'></td>
-					<td><input name='id_volonter' type='checkbox' value='$row[id_volonter]'></td>
+					<td><input size='30' class='form-control1', name = 'adres_zitel' type='text' value='$row[adres_zitel]'></td>
+          <td><input class='form-control1', name = 'date_birthday' type='date' value='$row[date_birthday]'></td>
+          <td><input size='5' class='form-control1', name = 'otrabot_chas' type='text' value='$row[otrabot_chas]'></td>
+          <td><input size='5' class='form-control1', name = 'kol_meropr' type='text' value='$row[kol_meropr]'></td>
+          <td>
+          <select name='fk_user' style='width: 180px; padding: 10px; border-radius: 10px'>
+          ";
+        $sqlcombo = "SELECT * FROM `user`";
+        $rescombo = mysqli_query($connect, $sqlcombo);
+        echo "<option value='$row[fk_user]' hidden>$row[login]</option>";
+        while ($ri = mysqli_fetch_array($rescombo)) {
+          echo "
+            <option value='$ri[id_user]'>$ri[login]</option>";
+        }
+        echo "
+          </select>
+          </td>
+          <td><input size='10' class='form-control1', name = 'img' type='text' value='$row[img]'></td>
+          <td><input size='15' class='form-control1', name = 'tel' type='text' value='$row[tel]'></td>
 					<td><input type='submit' class='btn btn-warning' value='Изменить'></td>
 				</form>
 				<td>
-					<form action='inc/deleteV.php' method='POST'>
-						<input name='id_volonter' type='checkbox' value='$row[id_volonter]'>
-						<input name='submit' type='submit' class='btn btn-danger' value='Удалить'>
-					</form>
+						<a name='submit' class='btn btn-danger' href='inc/deleteV.php?id=$row[id_volonter]'>Удалить</a>
 				</td>
 				</tr>";
       }
-
-      echo "<tr>
-				<form action = 'inc/insertV.php' method = 'POST'>
-					<td>$row[id_volonter]</td>
-					<td><input size='32' class='form-control1', name = 'fio' type='text' value='' ></td>
-					<td><input size='34' class='form-control1', name = 'adres_zitel' type='text' value=''></td>
-                    <td><input class='form-control1', name = 'date_birthday' type='date' value=''></td>
-                    <td><input size='5' class='form-control1', name = 'otrabot_chas' type='text' value=''></td>
-                    <td><input size='5' class='form-control1', name = 'kol_meropr' type='text' value=''></td>
-                    <td><input size='5' class='form-control1', name = 'fk_user' type='text' value=''></td>
-                    <td><input size='10' class='form-control1', name = 'img' type='text' value=''></td>
-                    <td><input size='15' class='form-control1', name = 'tel' type='text' value=''></td>
-					<td><input name='id_volonter' type='checkbox' value='$row[id_volonter]'></td>
-					<td><input type='submit' class='btn btn-warning' value='Добавить'></td>
-				</form>
-				<td>
-				</td>
-				</tr>";
-
       echo "</table>";
       ?>
       <ul class="pagin">
-        <li><a href="?pageno=1">First</a></li>
+        <li><a href="?pageno=1">В начало</a></li>
         <li class="<?php if ($pageno <= 1) {
           echo 'disabled';
         } ?>">
@@ -254,7 +315,7 @@ $profile = mysqli_fetch_assoc($select);
             echo '#';
           } else {
             echo "?pageno=" . ($pageno - 1);
-          } ?>">Prev</a>
+          } ?>">Предыдущая</a>
         </li>
         <li class="<?php if ($pageno >= $total_pages) {
           echo 'disabled';
@@ -263,9 +324,9 @@ $profile = mysqli_fetch_assoc($select);
             echo '#';
           } else {
             echo "?pageno=" . ($pageno + 1);
-          } ?>">Next</a>
+          } ?>">Следующая</a>
         </li>
-        <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+        <li><a href="?pageno=<?php echo $total_pages; ?>">В конец</a></li>
       </ul>
       <?php
       mysqli_close($connect);

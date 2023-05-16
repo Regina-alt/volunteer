@@ -1,9 +1,9 @@
 <?php
 
-	$id_user = $_POST['id_user'];
-	$login = $_POST['login'];
-	$password = $_POST['password'];
-	$role = $_POST['role'];
+	$id_user = $_GET['id_user'];
+	$login = $_GET['login'];
+	$password = $_GET['password'];
+	$role = $_GET['role'];
 	
 		$db=mysqli_connect("localhost", "root", "", "volunteer");
 		mysqli_query($db, "set names utf8");

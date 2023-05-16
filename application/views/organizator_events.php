@@ -92,7 +92,7 @@ $myrow = mysqli_fetch_array($r);
         </div>
         <div class="opt" id="opt">
             <h2>Все заявки</h2>
-            <div class="tb2-header">
+            <div class="tb4-header">
                 <table cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
@@ -106,7 +106,7 @@ $myrow = mysqli_fetch_array($r);
                     </thead>
                 </table>
             </div>
-            <div class="tbl-content">
+            <div class="tbl4-content">
                 <table cellpadding="0" cellspacing="0">
                     <tbody>
                         <?php

@@ -1,5 +1,4 @@
 <?php
-	$id_zayavka = $_POST['id_zayavka'];
 	$fk_volonter = $_POST['fk_volonter'];
     $fk_events = $_POST['fk_events'];
     $status = $_POST['status'];

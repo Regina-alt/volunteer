@@ -1,5 +1,4 @@
 <?php
-	$id_events = $_POST['id_events'];
 	$nazvanie = $_POST['nazvanie'];
     $task = $_POST['task'];
     $adres_events = $_POST['adres_events'];

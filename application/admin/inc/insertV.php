@@ -1,5 +1,4 @@
 <?php
-	$id_volonter = $_POST['id_volonter'];
 	$fio = $_POST['fio'];
     $adres_zitel = $_POST['adres_zitel'];
     $date_birthday = $_POST['date_birthday'];

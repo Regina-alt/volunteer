@@ -16,9 +16,16 @@
     if(!empty($_FILES['img_profile'])){
         $name = $_FILES['img_profile']['name'];
         $tmp_name = $_FILES['img_profile']['tmp_name'];
-        move_uploaded_file($tmp_name, "../uploads/" . $name);
+        move_uploaded_file($tmp_name, "C:/OSPanel/domains/volunteer.local/img/uploads" . $name);
+        
     }
-
+    if(!empty($_FILES['img_profile'])){
+        $name = $_FILES['img_profile']['name'];
+        $tmp_name = $_FILES['img_profile']['tmp_name'];
+        move_uploaded_file($tmp_name, "C:/Volunteer/application/menu/sourse/uploads/" . $name);
+        
+    }
+    
         mysqli_query($connect, "INSERT INTO `volonter`(`id_volonter`, `fio`, `adres_zitel`, `date_birthday`, `otrabot_chas`, `kol_meropr`, `fk_user`, `img`, `tel`) VALUES (NULL,'$fio','$adres_zitel','$date_birthday','0','0','$id_user','$name','$tel')");
         
         header('location: ../views/profile_volun.php');

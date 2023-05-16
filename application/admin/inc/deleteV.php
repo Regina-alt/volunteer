@@ -1,5 +1,5 @@
 <?php
-		$id_volonter = $_POST['id_volonter'];
+		$id_volonter = $_GET['id'];
 
 		$db=mysqli_connect("localhost", "root", "", "volunteer");
 		mysqli_query($db, "set names utf8");
@@ -8,6 +8,6 @@
 			echo "<meta http-equiv='refresh'>";		
             header('Location: ../table-vol.php');	
 		} else {
-			echo "<script>alert('Ошибка')</script><meta http-equiv='refresh'>";
+			echo "<script>alert('Запись является внешним ключом в другой таблице')</script><meta http-equiv='refresh'>";
 		}
 ?>

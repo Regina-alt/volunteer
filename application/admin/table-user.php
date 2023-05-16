@@ -113,6 +113,14 @@ $profile = mysqli_fetch_assoc($select);
                 <i class="bi bi-circle"></i>Книжка волонтера
               </a>
             </li>
+            <li> <a href="otchet2.php">
+                <i class="bi bi-circle"></i>Отработанное время волонтёров за период в одном городе
+              </a>
+            </li>
+            <li> <a href="otchet3.php">
+                <i class="bi bi-circle"></i>Карточка организации
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -170,6 +178,42 @@ $profile = mysqli_fetch_assoc($select);
     <!--end top header-->
 
     <div class="table-user">
+    <h3>Таблица "Пользователи"</h3>
+      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Добавить запись
+      </button>
+
+      <!-- Модальное окно -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Добавление волонтера</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+              <form action='inc/insertU.php' method='POST'>
+                <label for="login">Логин</label>
+                <br />
+                <input size='35' class='form-control1' , name='login' type='text'>
+                <br />
+                <label for="password">Пароль</label>
+                <br />
+                <input size='35' class='form-control1' , name='password' type='text'>
+                <br />
+                <label for="role">Роль</label>
+                <br />
+                <input size='35' class='form-control1' , name='role' type='text'>
+                <br />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              <input type='submit' class='btn btn-warning' value='Добавить'>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <?php
 
       if (isset($_GET['pageno'])) {
@@ -192,46 +236,28 @@ $profile = mysqli_fetch_assoc($select);
       echo "<th scope='col'>Логин</th>";
       echo "<th scope='col'>Пароль</th>";
       echo "<th scope='col'>Роль</th>";
-      echo "<th scope='col'></th>";
       echo "<th scope='col'>Модификация</th>";
       echo "<th scope='col'>Удаление</th>";
       echo "</tr>";
-     while ($myrow = mysqli_fetch_array($res_data)) {
+      while ($myrow = mysqli_fetch_array($res_data)) {
         echo "<tr>
-				<form action = 'inc/updateU.php' method = 'POST'>
-					<td>$myrow[id_user]</td>
+				<form action = 'inc/updateU.php' method = 'GET'>
+					<td><input size='32' class='form-control1', name = 'id_user' type='text' value='$myrow[id_user]' readonly></td>
 					<td><input size='32' class='form-control1', name = 'login' type='text' value='$myrow[login]' ></td>
 					<td><input size='34' class='form-control1', name = 'password' type='text' value='$myrow[password]'></td>
-                    <td><input size='30' class='form-control1', name = 'role' type='text' value='$myrow[role]'></td>
-					<td><input name='id_user' type='checkbox' value='$myrow[id_user]'></td>
+          <td><input size='30' class='form-control1', name = 'role' type='text' value='$myrow[role]'></td>
 					<td><input type='submit' class='btn btn-warning' value='Изменить'></td>
 				</form>
 				<td>
-					<form action='inc/deleteU.php' method='POST'>
-						<input name='id_user' type='checkbox' value='$myrow[id_user]'>
-						<input name='submit' type='submit' class='btn btn-danger' value='Удалить'>
-					</form>
+        <a name='submit' class='btn btn-danger' href='inc/deleteU.php?id=$myrow[id_user]'>Удалить</a>
 				</td>
 				</tr>";
       }
-     
-      echo "<tr>
-				<form action = 'inc/insertU.php' method = 'POST'>
-					<td>$myrow[id_user]</td>
-					<td><input size='32' class='form-control1', name = 'login' type='text' value='' ></td>
-					<td><input size='34' class='form-control1', name = 'password' type='text' value=''></td>
-                    <td><input size='30' class='form-control1', name = 'role' type='text' value=''></td>
-					<td><input name='id_organiz' type='checkbox' value='$myrow[id_user]'></td>
-					<td><input type='submit' class='btn btn-warning' value='Добавить'></td>
-				</form>
-				<td>
-				</td>
-				</tr>";
       echo "</table>";
 
       ?>
       <ul class="pagin">
-        <li><a href="?pageno=1">First</a></li>
+        <li><a href="?pageno=1">В начало</a></li>
         <li class="<?php if ($pageno <= 1) {
           echo 'disabled';
         } ?>">
@@ -239,7 +265,7 @@ $profile = mysqli_fetch_assoc($select);
             echo '#';
           } else {
             echo "?pageno=" . ($pageno - 1);
-          } ?>">Prev</a>
+          } ?>">Предыдущая</a>
         </li>
         <li class="<?php if ($pageno >= $total_pages) {
           echo 'disabled';
@@ -248,9 +274,9 @@ $profile = mysqli_fetch_assoc($select);
             echo '#';
           } else {
             echo "?pageno=" . ($pageno + 1);
-          } ?>">Next</a>
+          } ?>">Следующая</a>
         </li>
-        <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+        <li><a href="?pageno=<?php echo $total_pages; ?>">В конец</a></li>
       </ul>
       <?php
       mysqli_close($connect);

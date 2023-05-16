@@ -134,7 +134,7 @@ $up = mysqli_query($connect, "UPDATE `volonter` SET `otrabot_chas`='$chasi',`kol
                 </div>
             </div>
             <h3>Опыт волонтерской деятельности</h3>
-            <div class="tb2-header">
+            <div class="tb3-header">
                 <table cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>

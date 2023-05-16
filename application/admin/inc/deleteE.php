@@ -1,5 +1,5 @@
 <?php
-		$id_events = $_POST['id_events'];
+		$id_events = $_GET['id'];
 
 		$db=mysqli_connect("localhost", "root", "", "volunteer");
 		mysqli_query($db, "set names utf8");

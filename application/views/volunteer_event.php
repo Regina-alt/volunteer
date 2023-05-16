@@ -88,8 +88,6 @@ $up = mysqli_query($connect, "UPDATE `volonter` SET `otrabot_chas`='$chasi',`kol
             <h1>Настройки</h1>
             <div class="profile_v_container">
                 <ul>
-                    <li><img src="/img/assets/file.png" alt=""><a onclick="printDiv()">Скачать паспорт волонтера</a>
-                    </li>
                     <li><img src="/img/assets/suitcase.png" alt=""><a href="volunteer_event.php">Мои мероприятия</a>
                     </li>
                     <li><img src="/img/assets/people.png" alt=""><a href="profile_volun.php">Паспорт волонтера</a>
@@ -114,6 +112,7 @@ $up = mysqli_query($connect, "UPDATE `volonter` SET `otrabot_chas`='$chasi',`kol
                             <th scope='col'>Место проведения</th>
                             <th scope='col'>Дата</th>
                             <th scope='col'>Часы</th>
+                            <th scope='col'>Статус</th>
                         </tr>
                     </thead>
                 </table>
@@ -133,6 +132,15 @@ $up = mysqli_query($connect, "UPDATE `volonter` SET `otrabot_chas`='$chasi',`kol
                             echo "<td>$myrow[adres_events]</td>";
                             echo "<td>$myrow[data_start] - $myrow[data_finish]</td>";
                             echo "<td>$myrow[chas]</td>";
+                            echo "<td>";
+                            if ($myrow['status'] == 'progress') {
+                                echo "В процессе обработки";
+                              } else if ($myrow['status'] == 'accept') {
+                                echo "Одобрена";
+                              } else {
+                                echo "Отклонена";
+                              }
+                            echo "</td>";
                             echo "</tr>";
 
                         }

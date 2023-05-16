@@ -1,13 +1,13 @@
 <?php
 
-		$id_events = $_POST['id_events'];
-		$nazvanie = $_POST['nazvanie'];
-		$task = $_POST['task'];
-		$adres_events = $_POST['adres_events'];
-		$data_start = $_POST['data_start'];
-		$data_finish = $_POST['data_finish'];
-		$fk_organiz = $_POST['fk_organiz'];
-		$chas = $_POST['chas'];
+		$id_events = $_GET['id_events'];
+		$nazvanie = $_GET['nazvanie'];
+		$task = $_GET['task'];
+		$adres_events = $_GET['adres_events'];
+		$data_start = $_GET['data_start'];
+		$data_finish = $_GET['data_finish'];
+		$fk_organiz = $_GET['fk_organiz'];
+		$chas = $_GET['chas'];
 			
 		$db=mysqli_connect("localhost", "root", "", "volunteer");
 		mysqli_query($db, "set names utf8");

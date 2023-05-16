@@ -1,12 +1,12 @@
 <?php
 
 
-	$id_organiz = $_POST['id_organiz'];
-	$nazvanie_org = $_POST['nazvanie_org'];
-    $adres = $_POST['adres'];
-    $opisanie = $_POST['opisanie'];
-    $fk_user = $_POST['fk_user'];
-    $tel = $_POST['tel'];
+	$id_organiz = $_GET['id_organiz'];
+	$nazvanie_org = $_GET['nazvanie_org'];
+    $adres = $_GET['adres'];
+    $opisanie = $_GET['opisanie'];
+    $fk_user = $_GET['fk_user'];
+    $tel = $_GET['tel'];
 	
 		$db=mysqli_connect("localhost", "root", "", "volunteer");
 		mysqli_query($db, "set names utf8");

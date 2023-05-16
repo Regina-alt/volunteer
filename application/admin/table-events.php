@@ -6,6 +6,8 @@ $id_user = $_SESSION['user']['id_user'];
 
 $select = mysqli_query($connect, "SELECT * FROM `user` WHERE `id_user` = '$id_user'");
 $profile = mysqli_fetch_assoc($select);
+
+
 ?>
 
 <!doctype html>
@@ -113,6 +115,14 @@ $profile = mysqli_fetch_assoc($select);
                 <i class="bi bi-circle"></i>Книжка волонтера
               </a>
             </li>
+            <li> <a href="otchet2.php">
+                <i class="bi bi-circle"></i>Отработанное время волонтёров за период в одном городе
+              </a>
+            </li>
+            <li> <a href="otchet3.php">
+                <i class="bi bi-circle"></i>Карточка организации
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -170,6 +180,67 @@ $profile = mysqli_fetch_assoc($select);
     <!--end top header-->
 
     <div class="table-events">
+      <h3>Таблица "Мероприятия"</h3>
+      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Добавить запись
+      </button>
+
+      <!-- Модальное окно -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Добавление волонтера</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+              <form action='inc/insertE.php' method='POST'>
+                <label for="nazvanie">Название</label>
+                <br />
+                <textarea class='form-control3' style='width: 350px; height: 100px' name='nazvanie'></textarea>
+                <br />
+                <label for="task">Задачи</label>
+                <br />
+                <textarea class='form-control2' style='width: 350px; height: 150px' name='task'></textarea>
+                <br />
+                <label for="adres_events">Адрес мероприятия</label>
+                <br />
+                <input size='35' class='form-control1' , name='adres_events' type='text'>
+                <br />
+                <label for="data_start">Дата начала</label>
+                <br />
+                <input size='35' class='form-control1' , name='data_start' type='text'>
+                <br />
+                <label for="data_finish">Дата окончания</label>
+                <br />
+                <input size='35' class='form-control1' , name='data_finish' type='text'>
+                <br />
+                <label for="fk_organiz">Организатор</label>
+                <br />
+                <select name='fk_user' style='width: 350px; padding: 10px; border-radius: 10px'>
+                  <?php 
+                  $sqlcombo = "SELECT * FROM `organizator`";
+                  $rescombo = mysqli_query($connect, $sqlcombo);
+                  while ($ri = mysqli_fetch_array($rescombo)) {
+                  echo "
+                  <option value='$ri[id_organiz]'>$ri[nazvanie_org]</option>";
+                  }
+                  ?>
+                </select>
+                <br />
+                <label for="chas">Часы</label>
+                <br />
+                <input size='35' class='form-control1' , name='chas' type='text'>
+                <br />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              <input type='submit' class='btn btn-warning' value='Добавить'>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <?php
       if (isset($_GET['pageno'])) {
         $pageno = $_GET['pageno'];
@@ -183,8 +254,10 @@ $profile = mysqli_fetch_assoc($select);
       $result = mysqli_query($connect, $count_sql);
       $total_rows = mysqli_fetch_array($result)[0];
       $total_pages = ceil($total_rows / $size_page);
-      $sql = "SELECT `id_events`, `nazvanie`, `task`, `adres_events`, `data_start`, `data_finish`, `fk_organiz`, `chas` FROM `events` LIMIT $offset, $size_page";
+      $sql = "SELECT `id_events`, `nazvanie`, `task`, `adres_events`, `data_start`, `data_finish`, `fk_organiz`, `chas`,`nazvanie_org` FROM `events`,`organizator` WHERE `events`.`fk_organiz`=`organizator`.`id_organiz` LIMIT $offset, $size_page";
       $res_data = mysqli_query($connect, $sql);
+      
+
 
       echo "<table class='table'>";
       echo "<tr>";
@@ -196,52 +269,43 @@ $profile = mysqli_fetch_assoc($select);
       echo "<th scope='col'>Дата окончания</th>";
       echo "<th scope='col'>Организация</th>";
       echo "<th scope='col'>Часы</th>";
-      echo "<th scope='col'></th>";
       echo "<th scope='col'>Модификация</th>";
       echo "<th scope='col'>Удаление</th>";
       echo "</tr>";
       while ($myrow = mysqli_fetch_array($res_data)) {
+        
         echo "<tr>
-				<form action = 'inc/updateE.php' method = 'POST'>
-					<td>$myrow[id_events]</td>
+				<form action = 'inc/updateE.php' method = 'GET'>
+					<td><input size='5' class='form-control1', name = 'id_events' type='text' value='$myrow[id_events]' readonly></td>
 					<td><textarea class='form-control3', name = 'nazvanie'>$myrow[nazvanie]</textarea></td>
 					<td><textarea class='form-control2', name = 'task'>$myrow[task]</textarea></td>
-                    <td><input size='30' class='form-control1', name = 'adres_events' type='text' value='$myrow[adres_events]'></td>
-                    <td><input size='17' class='form-control1', name = 'data_start' type='text' value='$myrow[data_start]'></td>
-                    <td><input size='17' class='form-control1', name = 'data_finish' type='text' value='$myrow[data_finish]'></td>
-                    <td><input size='3' class='form-control1', name = 'fk_organiz' type='text' value='$myrow[fk_organiz]'></td>
-                    <td><input size='3' class='form-control1', name = 'chas' type='text' value='$myrow[chas]'></td>
-					<td><input name='id_events' type='checkbox' value='$myrow[id_events]'></td>
+          <td><input size='15' class='form-control1', name = 'adres_events' type='text' value='$myrow[adres_events]'></td>
+          <td><input size='17' class='form-control1', name = 'data_start' type='text' value='$myrow[data_start]'></td>
+          <td><input size='17' class='form-control1', name = 'data_finish' type='text' value='$myrow[data_finish]'></td>
+          <td>
+          <select name='fk_organiz' style='width: 200px; padding: 10px; border-radius: 10px'>
+          ";
+          $sqlcombo = "SELECT * FROM `organizator`";
+          $rescombo = mysqli_query($connect, $sqlcombo);
+          echo "<option value='$myrow[fk_organiz]' hidden>$myrow[nazvanie_org]</option>";
+           while ($ri = mysqli_fetch_array($rescombo)) { 
+            echo "
+            <option value='$ri[id_organiz]'>$ri[nazvanie_org]</option>";
+          }
+          echo "
+          </select></td>
+          <td><input size='3' class='form-control1', name = 'chas' type='text' value='$myrow[chas]'></td>
 					<td><input type='submit' class='btn btn-warning' value='Изменить'></td>
 				</form>
 				<td>
-					<form action='inc/deleteE.php' method='POST'>
-						<input name='id_events' type='checkbox' value='$myrow[id_events]'>
-						<input name='submit' type='submit' class='btn btn-danger' value='Удалить'>
-					</form>
+        <a name='submit' class='btn btn-danger' href='inc/deleteE.php?id=$myrow[id_events]'>Удалить</a>
 				</td>
 				</tr>";
       }
-      echo "<tr>
-				<form action = 'inc/insertE.php' method = 'POST'>
-					<td>$myrow[id_events]</td>
-					<td><textarea class='form-control3', name = 'nazvanie'></textarea></td>
-					<td><textarea class='form-control2', name = 'task'></textarea></td>
-                    <td><input size='30' class='form-control1', name = 'adres_events' type='text' value=''></td>
-                    <td><input size='17' class='form-control1', name = 'data_start' type='text' value=''></td>
-                    <td><input size='17' class='form-control1', name = 'data_finish' type='text' value=''></td>
-                    <td><input size='3' class='form-control1', name = 'fk_organiz' type='text' value=''></td>
-                    <td><input size='3' class='form-control1', name = 'chas' type='text' value=''></td>
-					<td><input name='id_events' type='checkbox' value='$myrow[id_events]'></td>
-					<td><input type='submit' class='btn btn-warning' value='Добавить'></td>
-				</form>
-				<td>
-				</td>
-				</tr>";
       echo "</table>";
       ?>
       <ul class="pagin">
-        <li><a href="?pageno=1">First</a></li>
+        <li><a href="?pageno=1">В начало</a></li>
         <li class="<?php if ($pageno <= 1) {
           echo 'disabled';
         } ?>">
@@ -249,7 +313,7 @@ $profile = mysqli_fetch_assoc($select);
             echo '#';
           } else {
             echo "?pageno=" . ($pageno - 1);
-          } ?>">Prev</a>
+          } ?>">Предыдущая</a>
         </li>
         <li class="<?php if ($pageno >= $total_pages) {
           echo 'disabled';
@@ -258,9 +322,9 @@ $profile = mysqli_fetch_assoc($select);
             echo '#';
           } else {
             echo "?pageno=" . ($pageno + 1);
-          } ?>">Next</a>
+          } ?>">Следующая</a>
         </li>
-        <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+        <li><a href="?pageno=<?php echo $total_pages; ?>">В конец</a></li>
       </ul>
       <?php
       mysqli_close($connect);

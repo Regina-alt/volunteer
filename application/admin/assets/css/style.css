@@ -1509,7 +1509,7 @@ ul.categories-list li {
 }
 
 .table-container{
-    margin-left: 5%;
+    margin-left: 8%;
     margin-top: 5%;
 }
 
@@ -1647,4 +1647,165 @@ h6{
         width: auto;
         height: auto;
     }
+}
+
+
+.otchet{
+    background-image: url('/img/otchet.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height:  550px;
+}
+
+.otcher-footer{
+    display: flex;
+    padding-top: 2%;
+}
+
+.otcher-footer img{
+    width: 125px;
+    height: 170px;
+    padding-top: 18px;
+    padding-left: 5px;
+}
+
+.otcher-footer p{
+    padding-top: 73px;
+    padding-left: 22% !important;
+}
+
+.otchet-content{
+    padding-left: 480px;
+    padding-top: 205px;
+}
+
+.otchet-content p{
+    color: #006bb3;
+}
+
+.otchet-content p:nth-child(1){
+    padding-left: 70px;
+    margin-bottom: 0;
+}
+
+.otchet-content p:nth-child(2){
+    padding-left:150px;
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+.otchet-content p:nth-child(3){
+    padding-left: 170px;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+.otchet-content p:nth-child(4){
+    padding-left: 30px;
+    margin-top: 7.5%;
+    margin-bottom: 0;
+}
+
+.otchet-container{
+    border: 1px solid #000;
+    width: 100%;
+    background-color: #fff;
+}
+
+.otchet-container h1{
+    font-size: 18px;
+    padding-right: 40%;
+    padding-left: 2%;
+}
+
+.otchet-table {
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+}
+
+.otchet-table tr th{
+    border: 1px solid #000;
+}
+
+.otchet-table tr td{
+    border-bottom: 1px solid #000;
+}
+
+.otchet {
+    -webkit-print-color-adjust: exact;
+}
+
+.printform{
+    width: 870px;
+}
+
+.header-otchet3{
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo-otchet3{
+    display: flex;
+}
+.logo-otchet3 p{
+    font-size: 24px;
+    color: #000;
+    font-weight: 600;
+    padding-left: 5%;
+}
+
+.logo-otchet3 img{
+    height: 50px;
+    padding-top: 5%;
+}
+.otchet3{
+    -webkit-print-color-adjust: exact;
+}
+
+.datatime{
+    color: #000;
+    padding-top: 3%;
+}
+
+.usl-otchet3{
+    padding-top: 5%;
+    padding-left: 15%;
+}
+
+.usl-otchet1{
+    padding-top: 5%;
+    padding-left: 15%;
+}
+
+.otchet2-content{
+    padding-left: 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.otchet2-content h2{
+    width: 400px;
+    text-align: justify;
+}
+
+.period {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.otchet2-container p{
+    text-align: end;
+    padding-right: 6%;
+}
+
+.sum{
+    border: 1px solid #000;
+    margin-left: 2%;
+}
+
+.loads{
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 2%;
 }

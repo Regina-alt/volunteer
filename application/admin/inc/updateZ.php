@@ -1,9 +1,9 @@
 <?php
 
-		$id_zayavka = $_POST['id_zayavka'];
-		$fk_volonter = $_POST['fk_volonter'];
-		$fk_events = $_POST['fk_events'];
-		$status = $_POST['status'];
+		$id_zayavka = $_GET['id_zayavka'];
+		$fk_volonter = $_GET['fk_volonter'];
+		$fk_events = $_GET['fk_events'];
+		$status = $_GET['status'];
 			
 		$db=mysqli_connect("localhost", "root", "", "volunteer");
 		mysqli_query($db, "set names utf8");

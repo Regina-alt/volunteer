@@ -1,5 +1,5 @@
 <?php
-		$id_organiz = $_POST['id_organiz'];
+		$id_organiz = $_GET['id'];
 
 		$db=mysqli_connect("localhost", "root", "", "volunteer");
 		mysqli_query($db, "set names utf8");
